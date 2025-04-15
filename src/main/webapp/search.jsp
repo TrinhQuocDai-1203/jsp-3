@@ -100,11 +100,11 @@
         </c:when>
         <c:when test="${users != null}">
             <h2>Không tìm thấy người dùng nào cho "${query}"</h2>
-            <img src="${pageContext.request.contextPath}/img/no_results.png" alt="No results" class="no-results-img">
+            <img src="${pageContext.request.contextPath}/img/NotFound.jpg" alt="No results" class="no-results-img">
         </c:when>
         <c:otherwise>
             <h2>Vui lòng nhập từ khóa để tìm kiếm</h2>
-            <img src="${pageContext.request.contextPath}/img/no_results.png" alt="No results" class="no-results-img">
+            <img src="${pageContext.request.contextPath}/img/NotFound.jpg" alt="No results" class="no-results-img">
         </c:otherwise>
     </c:choose>
 </div>
