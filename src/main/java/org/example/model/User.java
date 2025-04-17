@@ -4,35 +4,27 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class User {
-
     private Long id;
-
     private String username;
     private String password;
     private String role;
-
-
     private LocalDateTime createdAt;
-
-
+    private String email; // Trường mới
+    private int birthYear; // Trường mới
+    private int provinceId; // Trường mới
+    private String avatar; // Trường mới
     private List<Posts> posts = new ArrayList<>();
-
-
     private List<Follow> following = new ArrayList<>();
-
-
     private List<Follow> followers = new ArrayList<>();
-
-
     private boolean followedByCurrentUser;
+
+    // Constructors
+    public User() {
+    }
 
     public User(long id) {
         this.id = id;
-    }
-    public User() {
     }
 
     // Getters and Setters
@@ -74,6 +66,38 @@ public class User {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    public int getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(int provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public List<Posts> getPosts() {

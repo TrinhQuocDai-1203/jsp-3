@@ -120,9 +120,25 @@
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>org.example.controller.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/img/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/uploads/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

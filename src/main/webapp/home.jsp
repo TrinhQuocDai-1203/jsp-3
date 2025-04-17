@@ -1,206 +1,182 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Trang chủ</title>
+    <!-- Thêm link CDN cho Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .btn-follow {
+            padding: 4px 8px;
+            margin-left: 10px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
 
+        .btn-follow.following {
+            background-color: #e4e6eb;
+            color: #050505;
+        }
 
+        .btn-follow:hover {
+            opacity: 0.9;
+        }
 
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
 
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
-</head>
-<style>
-    .btn-follow {
-        padding: 4px 8px;
-        margin-left: 10px;
-        background-color: #1877f2;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9em;
-    }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .btn-follow.following {
-        background-color: #e4e6eb;
-        color: #050505;
-    }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    .btn-follow:hover {
-        opacity: 0.9;
-    }
+        .post-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f0f2f5;
-    }
+        .post-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 10px 20px;
-        background-color: white;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .user-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .post-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
-    .post-form {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
+        .post-author {
+            font-weight: bold;
+        }
 
-    .post-form textarea {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        resize: vertical;
-    }
+        .post-date {
+            color: #666;
+            font-size: 0.9em;
+        }
 
-    .post-list {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+        .post-content {
+            margin: 10px 0;
+        }
 
-    .post-card {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-    .post-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
+        .btn-primary {
+            background-color: #1877f2;
+            color: white;
+        }
 
-    .post-author {
-        font-weight: bold;
-    }
+        .btn-primary:hover {
+            background-color: #166fe5;
+        }
 
-    .post-date {
-        color: #666;
-        font-size: 0.9em;
-    }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
 
-    .post-content {
-        margin: 10px 0;
-    }
+        .page-link {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #1877f2;
+            text-decoration: none;
+        }
 
-    .btn {
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-    }
+        .page-link.active {
+            background-color: #1877f2;
+            color: white;
+            border-color: #1877f2;
+        }
 
-    .btn-primary {
-        background-color: #1877f2;
-        color: white;
-    }
+        .post-form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-    .btn-primary:hover {
-        background-color: #166fe5;
-    }
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
 
-    .pagination {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 20px;
-    }
+        .btn-close:hover {
+            color: #333;
+        }
 
-    .page-link {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        color: #1877f2;
-        text-decoration: none;
-    }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
 
-    .page-link.active {
-        background-color: #1877f2;
-        color: white;
-        border-color: #1877f2;
-    }
-
-    .post-form-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .btn-close {
-        background: none;
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        color: #666;
-    }
-
-    .btn-close:hover {
-        color: #333;
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-
-    .btn-follow {
-        padding: 4px 8px;
-        margin-left: 10px;
-        background-color: #1877f2;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9em;
-    }
-
-    .btn-follow.following {
-        background-color: #e4e6eb;
-        color: #050505;
-    }
-
-    .btn-follow:hover {
-        opacity: 0.9;
-    }
-</style>
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 
 <body>
@@ -208,12 +184,15 @@
     <h1>Trang chủ</h1>
     <div class="user-info">
         <form action="${pageContext.request.contextPath}/search" method="get" style="margin-right: 20px;">
-            <input type="text" name="query" placeholder="Tìm kiếm người dùng..." value="${query}"  class="form-control" style="display: inline-block; width: 200px;">
+            <input type="text" name="query" placeholder="Tìm kiếm người dùng..." value="${query}" class="form-control" style="display: inline-block; width: 200px;">
             <button type="submit" class="btn btn-primary" style="margin-left: 5px;">Tìm</button>
         </form>
-        <a href="${pageContext.request.contextPath}/follows/following" class="btn"
-           style="margin-right: 10px; text-decoration: none; color: #000;">
+        <a href="${pageContext.request.contextPath}/follows/following" class="btn" style="margin-right: 10px; text-decoration: none; color: #000;">
             <i class="fas fa-users"></i> Theo dõi
+        </a>
+        <!-- Thêm liên kết đến trang profile -->
+        <a href="${pageContext.request.contextPath}/profile" class="btn" style="margin-right: 10px; text-decoration: none; color: #000;">
+            <i class="fas fa-user"></i> Hồ sơ
         </a>
         <span>Xin chào, ${sessionScope.user.username}</span>
         <a href="${pageContext.request.contextPath}/logout" class="btn">Đăng xuất</a>
@@ -230,7 +209,7 @@
     <div id="postForm" class="post-form" style="display: none;">
         <div class="post-form-header">
             <h2>Đăng bài mới</h2>
-            <button onclick="togglePostForm()" class="btn-close">&times;</button>
+            <button onclick="togglePostForm()" class="btn-close">×</button>
         </div>
         <form action="${pageContext.request.contextPath}/post" method="post">
             <input type="text" name="title" placeholder="Tiêu đề bài viết" required class="form-control">
@@ -268,11 +247,10 @@
                         </div>
                         <div class="post-date">
                             <i class="far fa-clock"></i>
-                            <fmt:parseDate value="${post.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss"
-                                           var="parsedDate" type="both" />
+                            <fmt:parseDate value="${post.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDate" type="both" />
                             <span>
-                                            <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy HH:mm" />
-                                        </span>
+                                <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy HH:mm" />
+                            </span>
                         </div>
                     </div>
                     <c:if test="${sessionScope.user.id == post.user.id}">
@@ -284,8 +262,6 @@
                                 </button>
                             </form>
                             <!-- Xóa bài viết -->
-                            <!-- Form không hỗ trợ DELETE nên dùng fetch để xóa -->
-
                             <button type="button" class="btn btn-delete" onclick="deletePost('${post.id}')">
                                 <i class="fas fa-trash-alt"></i> Xóa
                             </button>
@@ -303,7 +279,7 @@
     <!-- Phân trang -->
     <div class="pagination">
         <c:if test="${currentPage > 1}">
-            <a href="?page=${currentPage - 1}" class="page-link">&laquo; Trước</a>
+            <a href="?page=${currentPage - 1}" class="page-link">« Trước</a>
         </c:if>
 
         <c:forEach begin="1" end="${totalPages}" var="i">
@@ -311,7 +287,7 @@
         </c:forEach>
 
         <c:if test="${currentPage < totalPages}">
-            <a href="?page=${currentPage + 1}" class="page-link">Sau &raquo;</a>
+            <a href="?page=${currentPage + 1}" class="page-link">Sau »</a>
         </c:if>
     </div>
 </div>
@@ -352,7 +328,6 @@
         })
             .then(response => {
                 if (response.ok) {
-                    // Cập nhật chỉ button của user này
                     followButton.classList.toggle('following');
                     if (isFollowing) {
                         followButton.innerHTML = '<i class="fas fa-user-plus"></i> Theo dõi';
@@ -371,5 +346,4 @@
     }
 </script>
 </body>
-
 </html>

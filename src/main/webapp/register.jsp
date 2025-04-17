@@ -18,7 +18,8 @@
             display: block;
             margin-bottom: 5px;
         }
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -57,7 +58,7 @@
 <!-- Nếu có lỗi (ví dụ: "Tên đăng nhập đã tồn tại"), nó sẽ hiện lên bằng chữ đỏ để bạn biết -->
 
 <form action="register" method="post">
-    <!-- Tác dụng: Tạo biểu mẫu để bạn nhập thông tin đăng ký (tên đăng nhập và mật khẩu) -->
+    <!-- Tác dụng: Tạo biểu mẫu để bạn nhập thông tin đăng ký -->
     <!-- "action='register'": Khi bạn nhấn "Đăng ký", dữ liệu được gửi đến "/register" trên máy chủ -->
     <!-- "method='post'": Dữ liệu được gửi kín đáo qua POST, không hiện trên URL, để bảo mật thông tin -->
 
@@ -80,9 +81,48 @@
         <!-- "required": Bắt buộc phải nhập, không để trống -->
     </div>
 
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <!-- Tác dụng: Hiển thị chữ "Email:" để bạn biết ô này nhập gì -->
+        <input type="email" id="email" name="email" required>
+        <!-- Tác dụng: Tạo ô để bạn gõ email, ví dụ: "test@example.com" -->
+        <!-- "type='email'": Đảm bảo định dạng email cơ bản (có @ và domain) -->
+        <!-- "name='email'": Đặt tên "email" cho dữ liệu này để máy chủ nhận biết -->
+        <!-- "required": Bắt buộc phải nhập -->
+    </div>
+
+    <div class="form-group">
+        <label for="birthYear">Năm sinh:</label>
+        <!-- Tác dụng: Hiển thị chữ "Năm sinh:" để bạn biết ô này nhập gì -->
+        <input type="number" id="birthYear" name="birthYear" required>
+        <!-- Tác dụng: Tạo ô để bạn gõ năm sinh, ví dụ: "2005" -->
+        <!-- "type='number'": Chỉ cho phép nhập số -->
+        <!-- "name='birthYear'": Đặt tên "birthYear" cho dữ liệu này để máy chủ nhận biết -->
+        <!-- "required": Bắt buộc phải nhập -->
+    </div>
+
+    <div class="form-group">
+        <label for="provinceId">Nơi ở:</label>
+        <!-- Tác dụng: Hiển thị chữ "Nơi ở:" để bạn biết ô này chọn gì -->
+        <select id="provinceId" name="provinceId" required>
+            <!-- Tác dụng: Tạo danh sách thả xuống (combo box) để bạn chọn tỉnh/thành phố -->
+            <!-- "name='provinceId'": Đặt tên "provinceId" cho dữ liệu này để máy chủ nhận biết -->
+            <!-- "required": Bắt buộc phải chọn một giá trị -->
+            <option value="">Chọn tỉnh/thành phố</option>
+            <!-- Tác dụng: Hiển thị lựa chọn mặc định, không có giá trị -->
+            <c:forEach items="${provinces}" var="province">
+                <!-- Tác dụng: Lặp qua danh sách tỉnh/thành phố từ máy chủ -->
+                <option value="${province.id}">${province.name}</option>
+                <!-- Tác dụng: Tạo một mục trong danh sách thả xuống -->
+                <!-- "value='${province.id}'": Gửi ID của tỉnh/thành phố khi bạn chọn -->
+                <!-- "${province.name}": Hiển thị tên tỉnh/thành phố để bạn thấy -->
+            </c:forEach>
+        </select>
+    </div>
+
     <button type="submit" class="btn">Đăng ký</button>
     <!-- Tác dụng: Tạo nút "Đăng ký" để gửi dữ liệu bạn vừa nhập -->
-    <!-- Khi nhấp, tên đăng nhập và mật khẩu được gửi đến "/register" để máy chủ tạo tài khoản mới -->
+    <!-- Khi nhấp, dữ liệu được gửi đến "/register" để máy chủ tạo tài khoản mới -->
 </form>
 
 <div class="link">

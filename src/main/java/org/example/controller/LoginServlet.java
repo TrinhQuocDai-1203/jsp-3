@@ -11,6 +11,7 @@ import org.example.DAO.UserDAO; // Giao diện để truy vấn dữ liệu ngư
 import org.example.DAO.UserDAOImpl; // Lớp triển khai cụ thể của UserDAO
 import org.example.model.User; // Lớp mô hình đại diện cho thông tin người dùng
 import java.io.IOException; // Xử lý ngoại lệ liên quan đến đầu vào/đầu ra
+import java.sql.SQLException;
 
 // Định nghĩa Servlet và ánh xạ tới URL "/login" để xử lý yêu cầu đăng nhập
 @WebServlet("/login")
@@ -28,7 +29,12 @@ public class LoginServlet extends HttpServlet {
 
         // Tác dụng: Kiểm tra thông tin đăng nhập bằng cách tìm người dùng trong cơ sở dữ liệu
         // userDAO.findByUsernameAndPassword: Trả về đối tượng User nếu thông tin đúng, null nếu sai
-        User user = userDAO.findByUsernameAndPassword(username, password);
+        User user = null;
+        try {
+            user = userDAO.findByUsernameAndPassword(username, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // Tác dụng: Kiểm tra nếu thông tin đăng nhập hợp lệ (user không null)
         if (user != null) {

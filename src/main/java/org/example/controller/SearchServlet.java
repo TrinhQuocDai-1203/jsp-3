@@ -9,6 +9,7 @@ import org.example.DAO.UserDAO;
 import org.example.DAO.UserDAOImpl;
 import org.example.model.User;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/search")
@@ -28,7 +29,11 @@ public class SearchServlet extends HttpServlet {
 
         List<User> users = null;
         if (query != null && !query.trim().isEmpty()) {
-            users = userDAO.searchByUsername(query.trim());
+            try {
+                users = userDAO.searchByUsername(query.trim());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("Search completed, found " + (users != null ? users.size() : 0) + " users for query: " + query);
         } else {
             System.out.println("No valid search query provided");
